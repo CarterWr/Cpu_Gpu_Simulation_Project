@@ -12,6 +12,9 @@ class Main_Memory():
         return
 
     def write(self, address, data):
+        if address > len(self.data) or (address < 0):
+            print(f"Main Memory Error: trying to access a index in data that is out of range: {address}/{len(self.data)}")
+            return
         self.data[address] = data
         
         
