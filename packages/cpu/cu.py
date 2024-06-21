@@ -25,7 +25,7 @@ from ..gpu.gpu import GPU
 
 #All (a few made up some from mips) CODES OP AND Function
 #   OP   |   FC   |   DEF   
-# 000101   ######   Sends instruction to gpu (Does not look at function if used)
+# 000101   ######   Sends instruction to gpu (Does not look at function code if used)
 # 000000   100000   Add two numbers from register
 # 000000   100010   Subtract two numbers from register
 # 000000   011000   Multiply two numbers from register
