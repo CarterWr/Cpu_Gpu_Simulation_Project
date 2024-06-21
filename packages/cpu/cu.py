@@ -15,7 +15,7 @@ from ..gpu.gpu import GPU
 #  OP    RS    RT       RD       FC
 
 
-# When storing a number into registers it combines RS and RT
+# When storing a number into registers it combines RS and RT (Also writing to cache)
 
 ##000000 0000000000 0000000000 000000
 #  OP        RS         RD       FC
@@ -32,6 +32,8 @@ from ..gpu.gpu import GPU
 # 000000   011010   Divide two numbers from register
 # 000001   000000   Store value to register
 # 100001   000000   Return Most Recent Calculation 
+# 100011   000000   Return entry at cache at given location (RD)  
+# 100101   000000   Writes given data to cache at next avalable address
 
 #class
 class CU:
@@ -67,6 +69,17 @@ class CU:
             if last_calculation_result != None:
                 self.update_display(f"Previous Calculation: {last_calculation_result}")
                 return
+            return
+        elif op == '100011':
+            rd_number = self.read_binary(rd)
+            self.update_display(f"Looking for data with location {rd_number} in the Cache.")
+            self.cache.read(rd_number)
+            return
+        elif op == '100101':
+            rd_number = self.read_binary(rd)
+            data = self.read_binary(rs + rt)
+            self.update_display(f"Writing data {data} at with tag {rd_number} in cache.")
+            self.cache.write(rd_number, data)
             return
         elif op != '000000':
             print("Error: OP code is not in current list, please check current OP codes.")

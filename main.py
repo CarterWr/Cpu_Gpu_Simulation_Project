@@ -23,56 +23,7 @@ if __name__ == "__main__":
     fc = "000000"
     test_instruction = op + rs + rt + rd + fc
   
-    # adds 7 to the next register
-    op = "000001"
-    rs = "00000"
-    rt = "00111"
-    rd = "0000000000"
-    fc = "000000"
-    test_instruction_1 = op + rs + rt + rd + fc
-    # adds 18 to register
-    op = "000001"
-    rs = "00000"
-    rt = "10010"
-    rd = "0000000000"
-    fc = "000000"
-    test_instruction_2 = op + rs + rt + rd + fc
-    # adds 18 and 7 and stores them at register 3
-    op = "000000"
-    rs = "00010"
-    rt = "00001"
-    rd = "0000000011"
-    fc = "100000"
-    test_instruction_3 = op + rs + rt + rd + fc
-    
-    # adds result stored at register 3 and number at register 2 stores result at register 7
-    op = "000000"
-    rs = "00001"
-    rt = "00011"
-    rd = "0000000111"
-    fc = "100010"
-    test_instruction_4 = op + rs + rt + rd + fc
-
-    # gets previous calculation
-    op = "100001"
-    rs = "00000"
-    rt = "00000"
-    rd = "0000001000"
-    fc = "000000"
-    test_instruction_5 = op + rs + rt + rd + fc
-
-
 
     cpu.read_instructions(test_instruction)
 
-    cpu.read_instructions(test_instruction_1)
-
-    cpu.read_instructions(test_instruction_2)
-
-    cpu.read_instructions(test_instruction_3)
-
-    cpu.read_instructions(test_instruction_4)
-
-    cpu.read_instructions(test_instruction_5)
-
-    cpu.read_instructions(test_instruction_5)
+   
