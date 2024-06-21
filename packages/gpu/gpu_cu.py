@@ -11,5 +11,6 @@ class GPU_CU:
         self.gpu_register = GPU_Register()
         self.vram = VRAM()
 
+
     def instuction_intake(self, instruction):
         pass

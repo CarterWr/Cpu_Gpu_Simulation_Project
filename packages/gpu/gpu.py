@@ -6,5 +6,5 @@ class GPU:
         self.gpu_cu = GPU_CU()
         
 
-    def read_instruction(self):
+    def read_instruction(self, instruction):
         pass
