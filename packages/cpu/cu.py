@@ -3,6 +3,7 @@ from .alu import ALU
 from .cpu_cache import CPU_Cache
 from .register import Register
 from ..gpu.gpu import GPU
+from ..system_memory.secondary_memory import Secondary_memory
 
 
 # ---Binary instructions breakdown---
@@ -15,7 +16,7 @@ from ..gpu.gpu import GPU
 #  OP    RS    RT       RD       FC
 
 
-# When storing a number into registers it combines RS and RT (Also writing to cache)
+# When storing a number into registers(and other storage devices) it combines RS and RT (Also writing to cache)
 
 ##000000 0000000000 0000000000 000000
 #  OP        RS         RD       FC
@@ -34,6 +35,8 @@ from ..gpu.gpu import GPU
 # 100001   000000   Return Most Recent Calculation 
 # 100011   000000   Return entry at cache at given location (RD)  
 # 100101   000000   Writes given data to cache at next avalable address
+# 010010   000000   Stores value to secondary memory (when storing using this op code only rs+rt is being looked at)
+# 110001   000000   Returns value at given address in secondary memory (only rd is going to be looked at)
 
 #class
 class CU:
@@ -43,6 +46,7 @@ class CU:
         self.cache = CPU_Cache()
         self.register = Register()
         self.gpu = GPU()
+        self.secondary_memory = Secondary_memory()
     
     def read_binary(self, binary):
         return int(binary, 2)
@@ -80,6 +84,20 @@ class CU:
             data = self.read_binary(rs + rt)
             self.update_display(f"Writing data {data} at with tag {rd_number} in cache.")
             self.cache.write(rd_number, data)
+            return
+        elif op == '010010':
+            #Converts to a string to be stored/formated into file
+            rs_number = str(self.read_binary(rs + rt))
+            self.secondary_memory.write(rs_number)
+            data_index = self.secondary_memory.get_index(rs_number)
+            if data_index is not None:
+                self.update_display(f"Stored {rs_number} at index {data_index} in secondary Memory.")
+            return
+        elif op == '110001':
+            rd_number = self.read_binary(rd)
+            result = self.secondary_memory.read(rd_number)
+            if result is not None:
+                self.update_display(f"data at memory address {rd_number}: {result}")
             return
         elif op != '000000':
             print("Error: OP code is not in current list, please check current OP codes.")
