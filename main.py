@@ -11,6 +11,8 @@ from packages.cpu.cpu import CPU
 # 100001   000000   Return Most Recent Calculation 
 # 100011   000000   Return entry at cache at given location (RD)  
 # 100101   000000   Writes given data to cache at next avalable address 
+# 010010   000000   Stores value to secondary memory (when storing using this op code only rs+rt is being looked at)
+# 110001   000000   Returns value at given address in secondary memory (only rd is going to be looked at)
 
 
 if __name__ == "__main__":
@@ -25,9 +27,17 @@ if __name__ == "__main__":
     fc = "000000"
     test_instruction = op + rs + rt + rd + fc
 
+    op = "110001"
+    rs = "00000"
+    rt = "00000"
+    rd = "0010000000"
+    fc = "000000"
+    test_instruction2 = op + rs + rt + rd + fc
 
-  
 
     cpu.read_instructions(test_instruction)
+    cpu.read_instructions(test_instruction2)
+    
+
 
    
