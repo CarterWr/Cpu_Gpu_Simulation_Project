@@ -7,6 +7,9 @@ class CPU:
     def __init__(self):
         self.cu = CU()
 
+    def __del__(self):
+        print("\nProgram shutting down, Have a nice day!\n")
+
     def check_instruciton(self, instruction):
         comparioson_set = {'0', '1'}
 
