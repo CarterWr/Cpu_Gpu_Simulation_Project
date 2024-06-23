@@ -52,11 +52,14 @@ class CU:
         return int(binary, 2)
 
     def instruction_intake(self, instruction):
+        # if using the gpu we dont need to more storage so only initalizing the op code variable
         op = instruction[:6]
         
-        # if using the gpu we dont need to more storage so only initalizing the op code variable
-        if op == '000101':
-            self.gpu.read_instruction(instruction[6:])
+        gpu_op_lst = ['000101', '110011', '111011', '000111', '111000', '010011', '101011']
+
+        if  op in gpu_op_lst:
+            self.gpu.read_instructions(instruction)
+            return
 
         rs = instruction[6:11]
         rt = instruction[11:16]
@@ -72,7 +75,6 @@ class CU:
             last_calculation_result = self.register.get_last_history_register()
             if last_calculation_result != None:
                 self.update_display(f"Previous Calculation: {last_calculation_result}")
-                return
             return
         elif op == '100011':
             rd_number = self.read_binary(rd)
@@ -100,7 +102,7 @@ class CU:
                 self.update_display(f"data at memory address {rd_number}: {result}")
             return
         elif op != '000000':
-            print("Error: OP code is not in current list, please check current OP codes.")
+            print("CPU CU Error: OP code is not in current list, please check current OP codes.")
             return
         
         
@@ -136,7 +138,7 @@ class CU:
             else:
                 return
         if fc != '000000':
-            print("Error: Invalid function code(FC), please enter a vaild one.")
+            print("CPU CU Error: Invalid function code(FC), please enter a vaild one.")
             return
         
         
