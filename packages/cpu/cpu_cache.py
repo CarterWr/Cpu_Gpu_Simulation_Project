@@ -54,8 +54,8 @@ class CPU_Cache:
     def get_entry(self, address):
         for entry in self.data:
             if entry["tag"] == address:
-                print("Hit\n")
+                #print("Hit\n")
                 return entry
         
-        print("Miss\n")
+        #print("Miss\n")
         return None
