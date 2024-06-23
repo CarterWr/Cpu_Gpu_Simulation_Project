@@ -37,7 +37,7 @@ class Register:
 
 
     def load(self, address):
-         if address != 0:
+         if address != 0 or None:
             return self.data_registers[address]
          else:
              print("Error: register at index 0 is protected please use another.")
