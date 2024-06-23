@@ -17,6 +17,3 @@ class VRAM:
         for line in self.test_buffer:
             for character in line:
                 print(character)
-
-    def write(self, data):
-        pass
