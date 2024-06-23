@@ -113,6 +113,11 @@ class CU:
         rs_register_number = self.register.load(rs_number)
         rt_register_number = self.register.load(rt_number)
 
+        if rs_register_number == 0 or rs_register_number == None:
+            return
+        elif rt_register_number == 0 or rt_register_number == None:
+            return
+
 
         if fc == '100000':
             self.update_display(f"Adding {rs_register_number} and {rt_register_number}.")
