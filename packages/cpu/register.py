@@ -32,7 +32,6 @@ class Register:
             else:
                 self.data_registers[address] = data
 
-                print(self.data_registers)
 
                 return
 
