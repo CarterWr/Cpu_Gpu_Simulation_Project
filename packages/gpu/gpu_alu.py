@@ -10,12 +10,12 @@ class GPU_ALU(ALU):
     def matrix_subtract(matrix_1, matrix_2):
         pass
 
-    def matrix_multiplication(matrix_1, matrix_2):
+    def matrix_multiply_inverse(matrix_1, matrix_2):
         pass
 
     def matrix_divide(matrix_1, matrix_2):
         #to "divide" matrices you have to multiply matrix 1 by the inverse of matrix 2: matrix_1 * matrix_2^-1
         pass
 
-    def scalar_multiplication(matrix, scalar):
+    def scalar_multiply(matrix, scalar):
         pass
