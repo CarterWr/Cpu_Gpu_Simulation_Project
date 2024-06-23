@@ -5,6 +5,5 @@ class GPU:
     def __init__(self):
         self.gpu_cu = GPU_CU()
         
-
-    def read_instruction(self, instruction):
-        pass
+    def read_instructions(self, instruction):
+        self.gpu_cu.instruction_intake(instruction)
