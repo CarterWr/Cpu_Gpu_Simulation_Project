@@ -1,2 +1,5 @@
-# cpu_gpu_simulation_project
+# Cpu Gpu Simulation Project
  
+## Instructions
+
+  * 
