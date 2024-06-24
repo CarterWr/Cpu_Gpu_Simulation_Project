@@ -37,5 +37,9 @@
    *     FC   100111     Subtracts 2 vectors 
    *     FC   110011     Multiply a vector by a scalar (vector is made up of the same passed in number)
    *     FC   111000     Divides a vector by a scalar (vector is made up of the same passed in number)
-   
+
+   * RS is Register Source, A address in a register that contains a value to do a operation on
+   * RT is Register To, A address in a register that contains a value to use to do an operation
+   * RD is Register Direction, A address where to store the result of an operation done on RS and RT
+   * When storing data into a register or cache or memory user a combonation of RS+RT
    
