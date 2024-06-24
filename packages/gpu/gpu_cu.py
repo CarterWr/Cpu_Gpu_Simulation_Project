@@ -5,22 +5,6 @@ from .gpu_register import GPU_Register
 from .video_main_memory import VRAM
 
 
-#class
-#GPU CODES
-#   OP   |   FC   |   DEF   
-# 000101   100000   Adds 2 basic numbers from register
-# 000101   100010   Subtracts 2 basic numbers from register
-# 000101   011000   Multiplies 2 basic numbers from register
-# 000101   011010   Divides 2 basic numbers from register
-# 000101   011100   Adds 2 matrices (or vectors)
-# 000101   100111   Subtracts 2 matrices (or vectors)
-# 000101   111000   Multiply 2 matrices (or vectors)
-# 000101   110011   Divides 2 matrices (or vectors)
-# 110011   000000   Writes given data to cache at next avalable address
-# 111011   000000   Return entry at cache at given location (RD)
-# 111000   000000   Reads current frame buffer even if unfinished (NO ACTUAL FRAM BUFFER FUNCTIONALITY) 
-# 010011   000000   Store value to register (uses rs + rt)
-# 101011   000000   Return Most Recent Calculation
 
 class GPU_CU: # IDEA: make this a child of cpu cu and fix circular imports with cu
     def __init__(self):
@@ -41,6 +25,8 @@ class GPU_CU: # IDEA: make this a child of cpu cu and fix circular imports with 
         rs = instruction[6:11]
         rt = instruction[11:16]
         rd = instruction[16:26]
+
+        
         
 
         if op == '110011':
@@ -71,7 +57,6 @@ class GPU_CU: # IDEA: make this a child of cpu cu and fix circular imports with 
         elif op != '000101':
             print("GPU CU Error: OP code is not in current list, please check current OP codes.")
             return
-
         fc = instruction[26:32]
 
         rs_number = self.read_binary(rs)
@@ -82,8 +67,10 @@ class GPU_CU: # IDEA: make this a child of cpu cu and fix circular imports with 
         rt_register_number = self.gpu_register.load(rt_number)
 
         if rs_register_number == 0 or rs_register_number == None:
+            self.update_display(f"Error: register at index 0 is protected please use another. rs num: {rs_register_number}")
             return
         elif rt_register_number == 0 or rt_register_number == None:
+            self.update_display(f"Error: register at index 0 is protected please use another. rt num: {rt_register_number}")
             return
 
 
@@ -103,24 +90,28 @@ class GPU_CU: # IDEA: make this a child of cpu cu and fix circular imports with 
             self.arithmitic_repeats(result, rd_number)
             return
         elif fc == '011010':
-            self.update_display(f"Dividing  {rs_register_number} and {rt_register_number}.")
+            self.update_display(f"Dividing {rs_register_number} and {rt_register_number}.")
             result = self.gpu_alu.divide(rs_number, rt_number)
             self.arithmitic_repeats(result, rd_number)
             return
-        elif fc == '011100': # ADD working vector/matrix operation functionality
-            result = self.gpu_alu.matrix_add(rs_number, rt_number)
+        elif fc == '011100': # ADD working vector/vector operation functionality
+            self.update_display(f"Converting {rs_register_number} and {rt_register_number} to vectors and adding them.")
+            result = self.gpu_alu.vector_add(rs_register_number, rt_register_number)
             self.arithmitic_repeats(result, rd_number)
             return
         elif fc == '100111':
-            result = self.gpu_alu.matrix_subtract(rs_number, rt_number)
+            self.update_display(f"Converting {rs_register_number} and {rt_register_number} to vectors and subtracting them.")
+            result = self.gpu_alu.vector_subtract(rs_register_number, rt_register_number)
             self.arithmitic_repeats(result, rd_number)
             return
         elif fc == '111000':
-            result = self.gpu_alu.matrix_multiply_inverse(rs_number, rt_number)
+            self.update_display(f"Converting {rs_register_number} to a vector and  {rt_register_number} is a scalar dividing them.")
+            result = self.gpu_alu.vector_divide(rs_register_number, rt_register_number)
             self.arithmitic_repeats(result, rd_number)
             return
         elif fc == '110011':
-            result = self.gpu_alu.scalar_multiply(rs_number, rt_number)
+            self.update_display(f"Converting {rs_register_number} to a vector and  {rt_register_number} is a scalar multiplying them.")
+            result = self.gpu_alu.scalar_multiply(rs_register_number, rt_register_number)
             self.arithmitic_repeats(result, rd_number)
             return
         elif fc != '000000':

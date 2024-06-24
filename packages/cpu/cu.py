@@ -1,4 +1,3 @@
-#imports
 from .alu import ALU
 from .cpu_cache import CPU_Cache
 from .register import Register
@@ -6,39 +5,6 @@ from ..gpu.gpu import GPU
 from ..system_memory.secondary_memory import Secondary_memory
 
 
-# ---Binary instructions breakdown---
-# 0-5 in instruction is the op code 
-# 6-10 is the register source
-# 11-15 is the register target
-# 16-25 is the register destination
-# 26-31 is the function code section
-#000000 00000 00000 0000000000 000000
-#  OP    RS    RT       RD       FC
-
-
-# When storing a number into registers(and other storage devices) it combines RS and RT (Also writing to cache)
-
-##000000 0000000000 0000000000 000000
-#  OP        RS         RD       FC
-
-#The RS is the number to store and rd is the register its getting stored to
-
-
-#All (a few made up some from mips) CODES OP AND Function
-#   OP   |   FC   |   DEF   
-# 000101   ######   Sends instruction to gpu (Does not look at function code if used)
-# 000000   100000   Add two numbers from register
-# 000000   100010   Subtract two numbers from register
-# 000000   011000   Multiply two numbers from register
-# 000000   011010   Divide two numbers from register
-# 000001   000000   Store value to register
-# 100001   000000   Return Most Recent Calculation 
-# 100011   000000   Return entry at cache at given location (RD)  
-# 100101   000000   Writes given data to cache at next avalable address
-# 010010   000000   Stores value to secondary memory (when storing using this op code only rs+rt is being looked at)
-# 110001   000000   Returns value at given address in secondary memory (only rd is going to be looked at)
-
-#class
 class CU:
     
     def __init__(self):

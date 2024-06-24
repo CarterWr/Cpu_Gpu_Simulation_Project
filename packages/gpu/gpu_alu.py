@@ -1,21 +1,28 @@
 from ..cpu.alu import ALU
 
-
 class GPU_ALU(ALU):
-    #Inherits all of alus method so it can "offload the cpu"
-    
-    def matrix_add(martix_1, matrix_2):
-        pass
 
-    def matrix_subtract(matrix_1, matrix_2):
-        pass
+    def vector_add(self, num1, num2):
+        vector1 = [num1 for i in range(3)]
+        vector2 = [num2 for i in range(3)]
+        
+        return [vector1[i] + vector2[i] for i in range(len(vector1))]
 
-    def matrix_multiply_inverse(matrix_1, matrix_2):
-        pass
+    def vector_subtract(self, num1, num2):
+        vector1 = [num1 for i in range(3)]
+        vector2 = [num2 for i in range(3)]
 
-    def matrix_divide(matrix_1, matrix_2):
-        #to "divide" matrices you have to multiply matrix 1 by the inverse of matrix 2: matrix_1 * matrix_2^-1
-        pass
+        return [vector1[i] - vector2[i] for i in range(len(vector1))]
 
-    def scalar_multiply(matrix, scalar):
-        pass
+    def vector_divide(self, num1, scalar):
+        if scalar == 0:
+            print("Division By Zero Error: cannot have scalar value be 0.")
+            return
+        vector1 = [num1 for i in range(3)]
+        
+        return [vector1[i] // scalar for i in range(len(vector1))]
+
+    def scalar_multiply(eslf, num1, scalar):
+        vector1 = [num1 for i in range(3)]
+        
+        return [vector1[i] * scalar for i in range(len(vector1))]
